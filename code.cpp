@@ -1,14 +1,15 @@
-const int buzzerPin = 8;
-const int potPin = A0;
+const int potPin = A0;    
+const int ledPin = 9;     
 
 void setup() {
-  pinMode(buzzerPin, OUTPUT);
+  pinMode(ledPin, OUTPUT); 
 }
 
 void loop() {
-  int potValue = analogRead(potPin);
-  int frequency = map(potValue, 0, 1023, 100, 2000);
-  tone(buzzerPin, frequency);
-  delay(10);
+  int potValue = analogRead(potPin);            
+  int ledBrightness = map(potValue, 0, 1023, 0, 255); 
+  
+  analogWrite(ledPin, ledBrightness);          
+  delay(10);                                   
 }
 
