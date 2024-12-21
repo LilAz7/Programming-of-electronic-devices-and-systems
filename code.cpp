@@ -1,20 +1,14 @@
-const int ledPin = 9;
-const int buttonPin = 2;
-
-int buttonState = 0;
+const int buzzerPin = 8;
+const int potPin = A0;
 
 void setup() {
-  pinMode(ledPin, OUTPUT);
-  
-  pinMode(buttonPin, INPUT);
+  pinMode(buzzerPin, OUTPUT);
 }
 
 void loop() {
-  buttonState = digitalRead(buttonPin);
-  if (buttonState == HIGH) {
-    digitalWrite(ledPin, HIGH);
-  } else {
-    digitalWrite(ledPin, LOW);
-  }
+  int potValue = analogRead(potPin);
+  int frequency = map(potValue, 0, 1023, 100, 2000);
+  tone(buzzerPin, frequency);
+  delay(10);
 }
 
