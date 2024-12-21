@@ -1,39 +1,23 @@
-int red = 9;
-int green = 10;
-int blue = 11;
-
+const int ledCount = 5;
+const int leds[ledCount] = {2, 3, 4, 5, 6};
+const int delayTime = 100;
 
 void setup() {
-  // put your setup code here, to run once:
-pinMode(red, OUTPUT);
-pinMode(green, OUTPUT);
-pinMode(blue, OUTPUT);
+  for (int i = 0; i < ledCount; i++) {
+    pinMode(leds[i], OUTPUT);
+  }
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-analogWrite(red, 255); //nilai warna untuk red 0-255
-analogWrite(green, 0);
-analogWrite(blue, 0);
-delay(1000);
-analogWrite(red, 0);
-analogWrite(green, 255); //nilai warna untuk green 0-255
-analogWrite(blue, 0);
-delay(1000);
-analogWrite(red, 0);
-analogWrite(green, 0); 
-analogWrite(blue, 255);//nilai warna untuk blue 0-255
-delay(1000);
-analogWrite(red, 255);
-analogWrite(green, 0); 
-analogWrite(blue, 255);
-delay(1000);
-analogWrite(red, 0);
-analogWrite(green, 255); 
-analogWrite(blue, 255);
-delay(1000);
-analogWrite(red, 255);
-analogWrite(green, 255); 
-analogWrite(blue, 0);
-delay(1000);
+  for (int i = 0; i < ledCount; i++) {
+    digitalWrite(leds[i], HIGH);
+    delay(delayTime);
+    digitalWrite(leds[i], LOW);
+  }
+  
+  for (int i = ledCount - 2; i > 0; i--) {
+    digitalWrite(leds[i], HIGH);
+    delay(delayTime);
+    digitalWrite(leds[i], LOW);
+  }
 }
