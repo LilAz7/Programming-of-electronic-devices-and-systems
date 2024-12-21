@@ -1,39 +1,48 @@
-int red = 9;
-int green = 10;
-int blue = 11;
+#include <TM1637Display.h>
 
+#define CLK 2
+#define DIO 3
+
+TM1637Display display(CLK, DIO);
+
+const int incrementButtonPin = 4; 
+const int resetButtonPin = 5;     
+
+int counter = 0;                  
+bool lastIncrementState = LOW;    
+bool lastResetState = LOW;        
 
 void setup() {
-  // put your setup code here, to run once:
-pinMode(red, OUTPUT);
-pinMode(green, OUTPUT);
-pinMode(blue, OUTPUT);
+  pinMode(incrementButtonPin, INPUT_PULLUP); 
+  pinMode(resetButtonPin, INPUT_PULLUP);     
+
+  display.setBrightness(7);                  
+  display.showNumberDec(counter);            
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-analogWrite(red, 255); //nilai warna untuk red 0-255
-analogWrite(green, 0);
-analogWrite(blue, 0);
-delay(1000);
-analogWrite(red, 0);
-analogWrite(green, 255); //nilai warna untuk green 0-255
-analogWrite(blue, 0);
-delay(1000);
-analogWrite(red, 0);
-analogWrite(green, 0); 
-analogWrite(blue, 255);//nilai warna untuk blue 0-255
-delay(1000);
-analogWrite(red, 255);
-analogWrite(green, 0); 
-analogWrite(blue, 255);
-delay(1000);
-analogWrite(red, 0);
-analogWrite(green, 255); 
-analogWrite(blue, 255);
-delay(1000);
-analogWrite(red, 255);
-analogWrite(green, 255); 
-analogWrite(blue, 0);
-delay(1000);
+  bool incrementState = digitalRead(incrementButtonPin);
+  bool resetState = digitalRead(resetButtonPin);
+
+  if (incrementState == LOW && lastIncrementState == HIGH) {
+    counter++; 
+    if (counter > 9999) { 
+      counter = 0;
+    }
+    updateDisplay();
+  }
+  lastIncrementState = incrementState;
+
+  if (resetState == LOW && lastResetState == HIGH) {
+    counter = 0; 
+    updateDisplay();
+  }
+  lastResetState = resetState;
+
+  delay(50); 
 }
+
+void updateDisplay() {
+  display.showNumberDec(counter); 
+}
+
