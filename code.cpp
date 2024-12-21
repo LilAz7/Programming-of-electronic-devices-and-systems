@@ -1,23 +1,21 @@
-const int ledCount = 5;
-const int leds[ledCount] = {2, 3, 4, 5, 6};
-const int delayTime = 100;
+const int buzzerPin = 8;
+const int buttonPin = 2;
+
+int buttonState = 0;
 
 void setup() {
-  for (int i = 0; i < ledCount; i++) {
-    pinMode(leds[i], OUTPUT);
-  }
+  pinMode(buzzerPin, OUTPUT);
+  pinMode(buttonPin, INPUT);
 }
 
 void loop() {
-  for (int i = 0; i < ledCount; i++) {
-    digitalWrite(leds[i], HIGH);
-    delay(delayTime);
-    digitalWrite(leds[i], LOW);
-  }
-  
-  for (int i = ledCount - 2; i > 0; i--) {
-    digitalWrite(leds[i], HIGH);
-    delay(delayTime);
-    digitalWrite(leds[i], LOW);
+  buttonState = digitalRead(buttonPin);
+  if (buttonState == HIGH) {
+    tone(buzzerPin, 1000); 
+  } else {
+    noTone(buzzerPin); 
   }
 }
+
+
+
