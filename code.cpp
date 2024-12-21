@@ -1,15 +1,18 @@
-const int potPin = A0;    
-const int ledPin = 9;     
+const int tempPin = A0; 
 
 void setup() {
-  pinMode(ledPin, OUTPUT); 
+  Serial.begin(9600); 
 }
 
 void loop() {
-  int potValue = analogRead(potPin);            
-  int ledBrightness = map(potValue, 0, 1023, 0, 255); 
+  int rawValue = analogRead(tempPin);       
+  float voltage = rawValue * (5.0 / 1023); 
+  float temperature = voltage * 100.0;     
   
-  analogWrite(ledPin, ledBrightness);          
-  delay(10);                                   
+  Serial.print("Температура: ");
+  Serial.print(temperature);
+  Serial.println(" °C");
+
+  delay(1000); 
 }
 
